@@ -1,81 +1,68 @@
-// models/inventoryModel.js
 const mongoose = require('mongoose');
 
 const InventorySchema = new mongoose.Schema({
-  productId: {
+  productId: { // ID del filtro (puede ser original o equivalente)
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: 'Product',
   },
-  warehouseId: {
+  warehouseId: { // ID del almacén donde se encuentra
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: 'Warehouse',
   },
-  batchNumber: {
+  batchNumber: { // Lote de compra del filtro
     type: String,
-    required: false,
+    required: true,
   },
-  expiryDate: {
+  purchaseDate: { // Fecha en la que se compró este lote
     type: Date,
-    required: false,
+    required: true,
   },
-  quantity: {
+  purchasePrice: { // Precio de compra del filtro en este lote
     type: Number,
     required: true,
     min: 0,
   },
-  location: {
+  salePrice: { // Precio de venta sugerido o establecido
+    type: Number,
+    required: true,
+    min: 0,
+  },
+  quantity: { // Cantidad de filtros disponibles en este lote
+    type: Number,
+    required: true,
+    min: 0,
+  },
+  location: { // Ubicación física dentro del almacén
     type: String,
     required: true,
   },
-  lastUpdated: {
+  equivalents: [{ // Lista de códigos equivalentes
+    brand: { type: String, required: true }, // Marca del filtro equivalente (ej: FILTRON, WIX)
+    code: { type: String, required: true } // Código del filtro en esa marca
+  }],
+  lastUpdated: { // Fecha de última actualización del inventario
     type: Date,
     default: Date.now,
   },
-  movements: [{
+  movements: [{ // Movimientos de inventario
     type: {
       type: String,
       enum: ['purchase', 'sale', 'adjustment', 'transfer'],
       required: true,
     },
-    quantity: {
-      type: Number,
-      required: true,
-    },
-    date: {
-      type: Date,
-      default: Date.now,
-    },
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: 'User',
-    },
-    details: {
-      type: String,
-      required: false,
-    },
+    quantity: { type: Number, required: true },
+    date: { type: Date, default: Date.now },
+    userId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
+    details: { type: String },
   }],
-  auditLog: [{
-    action: {
-      type: String,
-      required: true,
-    },
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: 'User',
-    },
-    date: {
-      type: Date,
-      default: Date.now,
-    },
-    details: {
-      type: String,
-      required: false,
-    },
+  auditLog: [{ // Registro de auditoría
+    action: { type: String, required: true },
+    userId: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
+    date: { type: Date, default: Date.now },
+    details: { type: String },
   }],
 });
 
-module.exports = mongoose.model('Inventory', InventorySchema);
+module.exports = mongoose.model('Inventory', InventorySchema, 'inventories');

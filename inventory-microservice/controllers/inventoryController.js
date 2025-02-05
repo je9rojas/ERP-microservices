@@ -13,11 +13,15 @@ exports.getAllInventory = async (req, res, next) => {
 
 exports.addInventoryItem = async (req, res, next) => {
   try {
+    // Validar los datos con Joi
     const { error } = inventorySchema.validate(req.body);
-    if (error) return res.status(400).json({ message: error.details[0].message });
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
 
+    // Llamar al servicio para agregar el inventario
     const newItem = await inventoryService.addInventoryItem(req.body);
-    res.status(201).json(newItem);
+    res.status(201).json({ message: 'Inventory item added successfully', data: newItem });
   } catch (err) {
     next(err);
   }
@@ -25,8 +29,17 @@ exports.addInventoryItem = async (req, res, next) => {
 
 exports.updateInventoryItem = async (req, res, next) => {
   try {
+    // Validar los datos con Joi antes de actualizar
+    const { error } = inventorySchema.validate(req.body, { allowUnknown: true });
+    if (error) {
+      return res.status(400).json({ message: error.details[0].message });
+    }
+
     const updatedItem = await inventoryService.updateInventoryItem(req.params.id, req.body);
-    res.json(updatedItem);
+    if (!updatedItem) {
+      return res.status(404).json({ message: 'Inventory item not found' });
+    }
+    res.json({ message: 'Inventory item updated successfully', data: updatedItem });
   } catch (err) {
     next(err);
   }
@@ -34,8 +47,23 @@ exports.updateInventoryItem = async (req, res, next) => {
 
 exports.deleteInventoryItem = async (req, res, next) => {
   try {
-    await inventoryService.deleteInventoryItem(req.params.id);
-    res.json({ message: 'Item deleted' });
+    const deletedItem = await inventoryService.deleteInventoryItem(req.params.id);
+    if (!deletedItem) {
+      return res.status(404).json({ message: 'Inventory item not found' });
+    }
+    res.json({ message: 'Inventory item deleted successfully' });
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getInventoryById = async (req, res, next) => {
+  try {
+    const inventoryItem = await inventoryService.getInventoryById(req.params.id);
+    if (!inventoryItem) {
+      return res.status(404).json({ message: 'Inventory item not found' });
+    }
+    res.json(inventoryItem);
   } catch (err) {
     next(err);
   }
