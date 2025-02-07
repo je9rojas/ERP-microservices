@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
 
 const InventorySchema = new mongoose.Schema({
-  productId: { // ID del filtro (puede ser original o equivalente)
+  productCode: { // Código físico del producto en inventario
+    type: String,
+    required: true,
+    unique: true, // Asegura que no se repita en otro lote
+  },
+  productId: { // ID del producto en la base de datos de productos
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: 'Product',

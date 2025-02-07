@@ -11,6 +11,31 @@ exports.getAllInventory = async (req, res, next) => {
   }
 };
 
+exports.getInventoryById = async (req, res, next) => {
+  try {
+    const inventoryItem = await inventoryService.getInventoryById(req.params.id);
+    if (!inventoryItem) {
+      return res.status(404).json({ message: 'Inventory item not found' });
+    }
+    res.json(inventoryItem);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.getInventoryByCode = async (req, res, next) => {
+  try {
+    const { code } = req.params;
+    const inventoryItem = await inventoryService.getInventoryByCode(code);
+    if (!inventoryItem) {
+      return res.status(404).json({ message: 'Inventory item not found' });
+    }
+    res.json(inventoryItem);
+  } catch (err) {
+    next(err);
+  }
+};
+
 exports.addInventoryItem = async (req, res, next) => {
   try {
     // Validar los datos con Joi
@@ -57,13 +82,13 @@ exports.deleteInventoryItem = async (req, res, next) => {
   }
 };
 
-exports.getInventoryById = async (req, res, next) => {
+exports.addInventoryMovement = async (req, res, next) => {
   try {
-    const inventoryItem = await inventoryService.getInventoryById(req.params.id);
-    if (!inventoryItem) {
-      return res.status(404).json({ message: 'Inventory item not found' });
-    }
-    res.json(inventoryItem);
+    const { productCode } = req.params;
+    const movementData = req.body;
+
+    const updatedInventory = await inventoryService.addInventoryMovement(productCode, movementData);
+    res.status(200).json({ message: 'Inventory movement recorded successfully', data: updatedInventory });
   } catch (err) {
     next(err);
   }
