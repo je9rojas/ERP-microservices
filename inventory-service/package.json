@@ -1,0 +1,26 @@
+{
+  "name": "inventory-microservice",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "/inventory-microservice\r │── config/\r │   ├── config.js          # Configuración centralizada\r │   ├── db.js              # Conexión a MongoDB\r │\r │── controllers/\r │   ├── inventoryController.js  # Controladores que manejan las solicitudes\r │\r │── middleware/\r │   ├── errorHandler.js     # Middleware de manejo de errores\r │\r │── models/\r │   ├── inventoryModel.js   # Esquema de MongoDB con Mongoose\r │\r │── routes/\r │   ├── inventoryRoutes.js  # Definición de rutas para el microservicio\r │\r │── services/\r │   ├── inventoryService.js # Lógica de negocio (separación de responsabilidades)\r │\r │── validations/\r │   ├── inventoryValidation.js # Validaciones con Joi\r │\r │── .env                    # Variables de entorno (Puerto, URI MongoDB)\r │── server.js                # Archivo principal para iniciar el servidor\r │── package.json             # Configuración de dependencias y scripts\r │── README.md                # Documentación del microservicio",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-validator": "^7.2.1",
+    "joi": "^17.13.3",
+    "mongoose": "^8.9.7",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "purchase-service",
+  "version": "1.0.0",
+  "description": "purchase-service/       # Microservicio de compras\r │── src/               \r │   ├── config/        # Configuración de la base de datos y variables de entorno\r │   │   ├── db.js\r │   │   ├── dotenv.js\r │   ├── controllers/   # Controladores para manejar las solicitudes HTTP\r │   │   ├── purchaseController.js\r │   ├── models/        # Modelos de datos con Mongoose\r │   │   ├── PurchaseModel.js\r │   ├── routes/        # Rutas de la API\r │   │   ├── purchaseRoutes.js\r │   ├── services/      # Lógica de negocio\r │   │   ├── purchaseService.js\r │   ├── validations/   # Esquemas de validación con Joi\r │   │   ├── purchaseValidation.js\r │   ├── utils/         # Utilidades comunes (logs, errores, helpers)\r │   │   ├── logger.js\r │   │   ├── errorHandler.js\r │   ├── app.js         # Configuración del servidor Express\r │── .env               # Variables de entorno\r │── package.json       # Dependencias y configuración de Node.js\r │── server.js          # Punto de entrada del servicio\r │── README.md          # Documentación del microservicio",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-validator": "^7.2.1",
+    "joi": "^17.13.3",
+    "mongoose": "^8.10.0",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

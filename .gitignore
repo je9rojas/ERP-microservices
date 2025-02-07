@@ -1,0 +1,8 @@
+# Ignorar todas las carpetas node_modules dentro del proyecto
+node_modules/
+
+# Opcional: ignorar dependencias instaladas automáticamente
+package-lock.json
+
+# Ignorar archivos de entorno
+.env
