@@ -1,4 +1,4 @@
-const Purchase = require('../models/Purchase');
+const Purchase = require('../models/purchaseModel');
 
 exports.createPurchase = async (data) => {
   const totalAmount = data.items.reduce((sum, item) => sum + item.totalPrice, 0);

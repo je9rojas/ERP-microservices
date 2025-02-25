@@ -1,9 +1,9 @@
 require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
-const connectDB = require('./config/db');
-const purchaseRoutes = require('./routes/purchaseRoutes');
-const errorHandler = require('./middleware/errorHandler');
+const connectDB = require('./src/config/db');
+const purchaseRoutes = require('./src/routes/purchaseRoutes');
+const errorHandler = require('./src/middleware/errorHandler');
 
 const app = express();
 
@@ -12,6 +12,7 @@ connectDB();
 
 // Middleware
 app.use(express.json());
+app.use(cors()); // Habilitar CORS para el frontend
 app.use(morgan('dev')); // Registro de solicitudes HTTP en la terminal
 
 // Rutas
